@@ -10,6 +10,7 @@
   function initialize(){
     initializeSocketIO();
 	$('#join').click(join);
+	$('#pick').click(pick);
   }
 
   function join(){
@@ -27,17 +28,30 @@
 	console.log(data);
 	
 	var user = data.user;
-	game.user = user;
-	game.letters = [];
-	game.nickname = user.concat(" the loser");
-	var tr = '<tr class="secondary" data-user="'+user+'"><td class="user">'+user+'</td><td class="letters"></td><td class="nickname">'+game.nickname+'</td></tr>';
+	var nickname = user.concat(" the loser");
+	var tr = '<tr class="secondary" data-user="'+user+'"><td class="user">'+user+'</td><td class="letters"></td><td class="nickname">'+nickname+'</td></tr>';
 	$('#users > tbody').append(tr);
+  }
+
+  function pick(){
+	var numlets = $('#count').val() * 1;
+	var total = game.letters.length + numlets;
+	if(total <= 7){
+	  socket.emit('getletters',{user:game.user, count:numlets});
+	}
+  }
+  
+  function setletters(data){
+    console.log('Jeebus! LETTERS!');
+	console.log(data);
+	console.log(data[0]);
   }
   
   function initializeSocketIO(){
     socket = io.connect('/game');
     socket.on('online', function(data){console.log(data);});
 	socket.on('joined', joined);
+	socket.on('setletters', setletters);
   }
 
 })();
