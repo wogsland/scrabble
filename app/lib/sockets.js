@@ -15,6 +15,8 @@ function join(data){
 }
 
 function getletters(data){
+  var socket = this;
+
   var letters = 'QWERTYUIOPASDFGHJKLZXCVBNM';
   letters = letters.split('');
   var picklist = [];
@@ -22,7 +24,6 @@ function getletters(data){
     var index = Math.floor(Math.random()*26)
 	picklist.push(letters[index]);
   }
-  var socket = this;
   socket.broadcast.emit('setletters',{user:data.user,letters:picklist});
   socket.emit('setletters',{user:data.user,letters:picklist});
 }

@@ -44,7 +44,13 @@
   function setletters(data){
     console.log('Jeebus! LETTERS!');
 	console.log(data);
-	console.log(data[0]);
+	
+	var $row = $('#users tr[data-user="'+data.user+'"');
+	var $td = $row.children('.letters');
+	for(var i=0;i<data.letters.length;i++){
+	  console.log(data.letters[i]);
+	  $td.append('<span>'+data.letters[i]+'</span>');	  
+	}
   }
   
   function initializeSocketIO(){
