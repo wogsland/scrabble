@@ -11,6 +11,8 @@
     initializeSocketIO();
 	$('#join').click(join);
 	$('#pick').click(pick);
+	$('#users').on('click','.primary .letters span',selectletter);
+	$('#board').on('click','td',placeletter);
   }
 
   function join(){
@@ -44,7 +46,7 @@
   function setletters(data){
     console.log('Jeebus! LETTERS!');
 	console.log(data);
-	
+	game.letters = data.letters;
 	var $row = $('#users tr[data-user="'+data.user+'"');
 	var $td = $row.children('.letters');
 	for(var i=0;i<data.letters.length;i++){
@@ -60,4 +62,15 @@
 	socket.on('setletters', setletters);
   }
 
+  function selectletter(){
+    console.log('clickses on '+$(this).text()+'!');
+	$('.primary .letters span').removeClass();
+	$(this).addClass('marked');
+  }
+  
+  function placeletter(){
+    console.log('clickses on '+$(this).data.i+'!');
+    
+  }
+  
 })();

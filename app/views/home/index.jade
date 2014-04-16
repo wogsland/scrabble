@@ -14,3 +14,10 @@ block content
         th Letters
         th Nickname
     tbody
+
+  table#board
+    tbody
+      - for(var i = 0; i<99 ; i++)
+        tr
+          - for(var j = 0; j<99 ; j++)
+            td(data-x:j, data-y:i)=i+j
