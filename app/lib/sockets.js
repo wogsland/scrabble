@@ -4,6 +4,7 @@ exports.connection = function(socket){
   socket.emit('online', {date: new Date()});
   socket.on('join', join);
   socket.on('getletters', getletters);
+  socket.on('sendmove', sendmove);
 };
 
 function join(data){
@@ -26,4 +27,11 @@ function getletters(data){
   }
   socket.broadcast.emit('setletters',{user:data.user,letters:picklist});
   socket.emit('setletters',{user:data.user,letters:picklist});
+}
+
+function sendmove(data){
+  var socket = this;
+  console.log(data);
+  socket.broadcast.emit('receivemove',data);
+  socket.emit('receivemove',data);
 }

@@ -60,6 +60,7 @@
     socket.on('online', function(data){console.log(data);});
 	socket.on('joined', joined);
 	socket.on('setletters', setletters);
+	socket.on('receivemove', receivemove);
   }
 
   function selectletter(){
@@ -69,8 +70,18 @@
   }
   
   function placeletter(){
-    console.log('clickses on '+$(this).data.i+'!');
-    
+	var letter = $('.primary .marked').text();
+	var x = $(this).data('x');
+	var y = $(this).data('y');
+    console.log('clickses on '+x+','+y+'!');
+    socket.emit('sendmove',{user:game.user, letter:letter, x:x, y:y})
+  }
+
+  function receivemove(data){
+    console.log(data);
+	var $td = $('#board td[data-x="'+data.x+'"][data-x="'+data.y+'"]');
+    console.log($td);
+	$td.text(data.letter);
   }
   
 })();
